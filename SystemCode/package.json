@@ -1,0 +1,30 @@
+{
+  "name": "rent-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "node src/main.js",
+    "test:scraper": "node script/test-scraper.js",
+    "test:conversation": "node script/test-conversation.js",
+    "test:excel": "node script/test-excel.js",
+    "test:pdf": "node script/test-pdf.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google-cloud/dialogflow": "^3.3.0",
+    "@xstate/fsm": "^1.5.1",
+    "exceljs": "^4.2.0",
+    "jsdom": "^16.4.0",
+    "node-fetch": "^2.6.1",
+    "pb-util": "^0.1.3",
+    "pdfmake": "^0.1.68",
+    "probe-image-size": "^6.0.0",
+    "twilio": "^3.52.0"
+  },
+  "devDependencies": {
+    "xmldom": "^0.4.0",
+    "xpath": "0.0.32"
+  }
+}

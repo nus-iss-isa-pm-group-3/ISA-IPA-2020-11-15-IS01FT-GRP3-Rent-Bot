@@ -1,0 +1,15 @@
+# Node.js modules
+node_modules/
+
+# VSCode
+.vscode/*
+!.vscode/launch.json
+
+# Google Cloud Platform key
+gcp-sa-key.json
+
+# Environment file
+.env
+
+# Miscellaneous
+*.bak
