@@ -51,15 +51,15 @@ Please make sure you are using Node.js 12.0.0 or higher (see `Node.js` column in
 3. Configure Twilio
    1. [Sign up for Twilio and activate the Sandbox](https://www.twilio.com/docs/whatsapp/quickstart/node?code-sample=code-send-a-message-with-whatsapp-and-nodejs&code-language=Node.js&code-sdk-version=3.x#sign-up-for-twilio-and-activate-the-sandbox)
       > Before you can send a WhatsApp message from your web language, you'll need to sign up for a Twilio account or sign into your existing account and activate the Twilio Sandbox for WhatsApp. It allows you to prototype with WhatsApp immediately using a shared phone number, without waiting for a dedicated number to be approved by WhatsApp.
-
+      >
       > To get started, select a number from the available sandbox numbers to activate your sandbox.
-
+      >
       > ![WA_Sandbox.png](https://twilio-cms-prod.s3.amazonaws.com/images/WA_Sandbox.width-800.png)
-
+      >
       > Be sure to take note of the phone number you choose in the Sandbox. You will need this later when we're ready to send some messages.
    2. [Connect the Sandbox to the server](https://www.twilio.com/docs/whatsapp/quickstart/node?code-sample=code-send-a-message-with-whatsapp-and-nodejs&code-language=Node.js&code-sdk-version=3.x#receive-and-reply-to-messages-from-whatsapp)
       > When someone replies to one of your messages, you will receive a webhook request from Twilio.
-
+      >
       > You can configure webhooks by connecting your Sandbox to an app you've already built for handling incoming messages, or build a new one for WhatsApp messages.
 
       ![Connect-the-Sandbox-to-the-server.png](Miscellaneous/Connect-the-Sandbox-to-the-server.png)
@@ -67,15 +67,30 @@ Please make sure you are using Node.js 12.0.0 or higher (see `Node.js` column in
       **Note:** The webhook URL should either be your distributed service URL (production) or the URL shown in terminal in step 2 (development).
 
 4. Configure Google Dialogflow
-   1. In the Cloud Console, go to the Create service [account key page] (https://console.cloud.google.com/apis/credentials/serviceaccountkey?_ga=2.241623360.396268985.1605697299-976439073.1602031984&project=rentagent-wuvr&folder&organizationId)
-   2. From the Service account list, select New service account.
-   3. In the Service account name field, enter a name.
-   4. From the Role list, select Project > Owner. Note that the Role field affects which resources your service account can access in your project. You can revoke these roles or grant additional roles later. In production environments, do not grant the Owner, Editor, or Viewer roles. 
-   5. Click Create. A JSON file that contains your key downloads to your computer.
-   6. Provide authentication credentials to your application code by setting the environment variable GOOGLE_APPLICATION_CREDENTIALS.
-      > For linux users：export GOOGLE_APPLICATION_CREDENTIALS="[PATH]"
-      
-      > For Windows users: $env:GOOGLE_APPLICATION_CREDENTIALS="[PATH]"
+   1. [Create a service account and download the private key file](https://cloud.google.com/dialogflow/es/docs/quick/setup#sa-create)
+      > 1. In the Cloud Console, go to the [**Create service account key page**](https://console.cloud.google.com/apis/credentials/serviceaccountkey?_ga=2.241623360.396268985.1605697299-976439073.1602031984&project=rentagent-wuvr&folder&organizationId)
+      > 2. From the **Service account** list, select **New service account**.
+      > 3. In the **Service account name** field, enter a name.
+      > 4. From the **Role** list, select **Project** > **Owner**.  
+         **Note:** the **Role** field affects which resources your service account can access in your project. You can revoke these roles or grant additional roles later. In production environments, do not grant the Owner, Editor, or Viewer roles. For more information, see [Granting, changing, and revoking access to resources](https://cloud.google.com/iam/docs/granting-changing-revoking-access).
+      > 5. Click **Create**. A JSON file that contains your key downloads to your computer.
+   2. [Use the service account key file in your environment](https://cloud.google.com/dialogflow/es/docs/quick/setup#auth-env)  
+      > Provide authentication credentials to your application code by setting the environment variable `GOOGLE_APPLICATION_CREDENTIALS`. Replace ***[PATH]*** with the file path of the JSON file that contains your service account key. This variable only applies to your current shell session, so if you open a new session, set the variable again.
+      > - For Linux or macOS users:
+      >   ```
+      >   export GOOGLE_APPLICATION_CREDENTIALS="[PATH]"
+      >   ```
+      > - For Windows users:
+      >
+      >   With PowerShell:
+      >   ```
+      >   $env:GOOGLE_APPLICATION_CREDENTIALS="[PATH]"
+      >   ```
+      >   With command prompt:
+      >   ```
+      >   set GOOGLE_APPLICATION_CREDENTIALS=[PATH]
+      >   ```
+
 ---
 
 ## SECTION 6 : PROJECT REPORT / PAPER
