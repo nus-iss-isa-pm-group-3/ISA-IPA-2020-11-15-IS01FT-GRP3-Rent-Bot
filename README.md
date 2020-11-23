@@ -37,7 +37,7 @@ Please make sure you are using Node.js 12.0.0 or higher (see `Node.js` column in
 1. - Download the source file and extract, or
    - Clone the repository from git:  
     `git clone https://github.com/nus-iss-isa-pm-group-3/ISA-IPA-2020-11-15-IS01FT-GRP3-Virtual-Renting-Assistant.git`
-1. `cd` to the `SystemCode` directory, run the following command in terminal:
+2. `cd` to the `SystemCode` directory, run the following command in terminal:
    - For production:  
      ```
      npm install --production
@@ -48,7 +48,7 @@ Please make sure you are using Node.js 12.0.0 or higher (see `Node.js` column in
      npm install --production=false
      npm run dev
      ```
-1. Configure Twilio
+3. Configure Twilio
    1. [Sign up for Twilio and activate the Sandbox](https://www.twilio.com/docs/whatsapp/quickstart/node?code-sample=code-send-a-message-with-whatsapp-and-nodejs&code-language=Node.js&code-sdk-version=3.x#sign-up-for-twilio-and-activate-the-sandbox)
       > Before you can send a WhatsApp message from your web language, you'll need to sign up for a Twilio account or sign into your existing account and activate the Twilio Sandbox for WhatsApp. It allows you to prototype with WhatsApp immediately using a shared phone number, without waiting for a dedicated number to be approved by WhatsApp.
 
@@ -57,7 +57,7 @@ Please make sure you are using Node.js 12.0.0 or higher (see `Node.js` column in
       > ![WA_Sandbox.png](https://twilio-cms-prod.s3.amazonaws.com/images/WA_Sandbox.width-800.png)
 
       > Be sure to take note of the phone number you choose in the Sandbox. You will need this later when we're ready to send some messages.
-   1. [Connect the Sandbox to the server](https://www.twilio.com/docs/whatsapp/quickstart/node?code-sample=code-send-a-message-with-whatsapp-and-nodejs&code-language=Node.js&code-sdk-version=3.x#receive-and-reply-to-messages-from-whatsapp)
+   2. [Connect the Sandbox to the server](https://www.twilio.com/docs/whatsapp/quickstart/node?code-sample=code-send-a-message-with-whatsapp-and-nodejs&code-language=Node.js&code-sdk-version=3.x#receive-and-reply-to-messages-from-whatsapp)
       > When someone replies to one of your messages, you will receive a webhook request from Twilio.
 
       > You can configure webhooks by connecting your Sandbox to an app you've already built for handling incoming messages, or build a new one for WhatsApp messages.
@@ -66,6 +66,15 @@ Please make sure you are using Node.js 12.0.0 or higher (see `Node.js` column in
 
       **Note:** The webhook URL should either be your distributed service URL (production) or the URL shown in terminal in step 2 (development).
 
+4. Configure Google Dialogflow
+   1. In the Cloud Console, go to the Create service [account key page] (https://console.cloud.google.com/apis/credentials/serviceaccountkey?_ga=2.241623360.396268985.1605697299-976439073.1602031984&project=rentagent-wuvr&folder&organizationId)
+   2. From the Service account list, select New service account.
+   3. In the Service account name field, enter a name.
+   4. From the Role list, select Project > Owner. Note that the Role field affects which resources your service account can access in your project. You can revoke these roles or grant additional roles later. In production environments, do not grant the Owner, Editor, or Viewer roles. 
+   5. Click Create. A JSON file that contains your key downloads to your computer.
+   6. Provide authentication credentials to your application code by setting the environment variable GOOGLE_APPLICATION_CREDENTIALS.
+      For linux users：export GOOGLE_APPLICATION_CREDENTIALS="[PATH]"
+      For Windows users: $env:GOOGLE_APPLICATION_CREDENTIALS="[PATH]"
 ---
 
 ## SECTION 6 : PROJECT REPORT / PAPER
