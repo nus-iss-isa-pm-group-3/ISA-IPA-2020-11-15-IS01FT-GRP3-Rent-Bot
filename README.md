@@ -12,22 +12,10 @@
 
 | Official Full Name  | Student ID (MTech Applicable)  | Work Items (Who Did What) | Email (Optional) |
 | :------------ |:---------------:| :-----| :-----|
-| CAO Zi Hao | A0215407M | a) System design 
-b) Conversation workflow design  
-c) Dialogflow design and implementation 
-d) Demo video and Project report
- | e0535497@u.nus.edu |
-| WANG Si Xiang | A0215475A | Web scraper 
-Finite State Machine 
-Dialogflow interaction 
-Project report   | e0535565@u.nus.edu |
-| ZHANG Jiu Yun | A0215513R | a) Market research and System design 
-b) Clustering analysis 
-c) Conversation platform development d) Project Report  | e0535603@u.nus.edu |
-| ZUO Zong Yuan | A0215291L | Set up web server 
-Twilio interaction 
-PDF generation 
-Testing  | e0535381@u.nus.edu |
+| CAO Zi Hao | A0215407M | Dialogflow Conversation e0535497@u.nus.edu |
+| WANG Si Xiang | A0215475A | Finite State Machine Project report  | e0535565@u.nus.edu |
+| ZHANG Jiu Yun | A0215513R | Clustering analysis Conversation platform developmentProject Report  | e0535603@u.nus.edu |
+| ZUO Zong Yuan | A0215291L | Set up web server  PDF generation Testing  | e0535381@u.nus.edu |
 
 ---
 
