@@ -5,7 +5,6 @@ const fs = require('fs');
 const PdfPrinter = require('pdfmake');
 const fetch = require('node-fetch').default;
 
-const root = path.join(os.tmpdir(), 'rent-bot');
 const creator = `${name.split('-').map(s => `${s[0].toUpperCase()}${s.slice(1)}`).join('')} v${version}`;
 const printer = new PdfPrinter({
     Helvetica: {
@@ -24,7 +23,7 @@ const cols = 4;
 exports.createPDF = async (id, {
     price, sqm, sqft, detail: { name, desc, info, facilities: fc_ls, map, photos }
 }) => {
-    const outdir = path.join(root, id);
+    const outdir = path.join(os.tmpdir(), 'virtual-renting-assistant', id);
     fs.existsSync(outdir) || fs.mkdirSync(outdir, { recursive: true });
     const out = path.join(outdir, `${name}.pdf`);
     if (fs.existsSync(out)) {

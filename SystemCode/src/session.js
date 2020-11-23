@@ -74,7 +74,7 @@ exports.Session = class {
     }
 
     _init() {
-        const service = interpret(fsm);
+        const service = interpret(fsm());
         service.subscribe(({ value, context: ctx, changed }) => {
             if ('begin' !== value && !ctx.response) {
                 ctx.respond(`${changed ? '' : ctx.reasons[ctx.reason] || ctx.reasons.default}${ctx.msgs[value] || ''}`);

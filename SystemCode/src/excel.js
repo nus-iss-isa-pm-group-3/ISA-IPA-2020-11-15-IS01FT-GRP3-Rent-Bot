@@ -6,7 +6,6 @@ const fetch = require('node-fetch').default;
 const { Workbook } = require('exceljs');
 const probe = require('probe-image-size');
 
-const root = path.join(os.tmpdir(), 'rent-bot');
 const creator = `${name.split('-').map(s => `${s[0].toUpperCase()}${s.slice(1)}`).join('')} v${version}`;
 const ext = {
     'image/png': 'png',
@@ -14,16 +13,15 @@ const ext = {
     'image/gif': 'gif'
 };
 
-exports.root = root;
-
 /**
  * @param {string} id
  * @param {import('./scraper.js').Property} param1
+ * @obsolete
  */
 exports.createExcel = async (id, {
     price, sqm, sqft, detail: { name, desc, info, facilities: fc_ls, map, photos }
 }) => {
-    const outdir = path.join(root, id);
+    const outdir = path.join(os.tmpdir(), 'virtual-renting-assistant', id);
     fs.existsSync(outdir) || fs.mkdirSync(outdir, { recursive: true });
     const out = path.join(outdir, `${name}.xlsx`);
     if (fs.existsSync(out)) {

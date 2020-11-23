@@ -27,9 +27,9 @@ Could you please describe your criteria? (e.g. location, price)`,
             ask_type: 'Which kind of residence do you want? (e.g. HDB, Condo, Landed)',
             ask_built_year: "What's your preferred constructed year of the residence?",
             list: `Which one would you like to learn more? \
-Please type its name or number (e.g. \`\`\`/1\`\`\`).
-If none of these residences match your need, you can type \`\`\`/next\`\`\` to other candidates, \
-or type \`\`\`/search\`\`\` to adjust your criteria.`,
+Please type its name or number (e.g. * \`\`\`/1\`\`\` *).
+If none of these residences match your need, you can type * \`\`\`/next\`\`\` * to other candidates, \
+or type * \`\`\`/search\`\`\` * to adjust your criteria.`,
             end: 'Hope I have helped you, bye~'
         };
         this.reasons = {
@@ -65,9 +65,9 @@ or type \`\`\`/search\`\`\` to adjust your criteria.`,
     _handlePrice({ minRentPrice, maxRentPrice, rentPrice }) {
         /** @type {import('./scraper.js').SearchOpt} */
         this.opt = rentPrice ?
-            { minRentPrice: rentPrice - 100, maxRentPrice: rentPrice + 100, ...this.opt } :
-            { minRentPrice, maxRentPrice, ...this.opt };
-        this.hasPrice = undefined !== rentPrice;
+            { ...this.opt, minRentPrice: rentPrice - 100, maxRentPrice: rentPrice + 100 } :
+            { ...this.opt, minRentPrice, maxRentPrice };
+        this.hasPrice = rentPrice;
         return false;
     }
 
@@ -114,68 +114,70 @@ const view = {
     END: 'end'
 };
 
-exports.fsm = createMachine({
-    context: new Context,
-    initial: 'begin',
-    states: {
-        begin: { on: { WELCOME: 'welcome', ...criteria } },
-        welcome: { on: criteria },
-        ask_location: { on: criteria },
-        ask_price: { on: criteria },
-        ask_detail: { on: { DETAIL: 'ask_type', NO_DETAIL: search, END: 'end' } },
-        ask_type: {
-            on: {
-                // @ts-ignore
-                PROPERTY_TYPE: { target: 'ask_built_year', actions: (ctx, { propertyType }) => ctx.type = propertyType },
-                END: 'end'
-            }
-        },
-        ask_built_year: {
-            on: {
-                BUILT_YEAR: [
-                    {
-                        cond: (ctx, { builtYearMin, builtYearMax }) =>
-                            (ctx.opt = { builtYearMin, builtYearMax, ...ctx.opt }, false)
+exports.fsm = () => {
+    return createMachine({
+        context: new Context,
+        initial: 'begin',
+        states: {
+            begin: { on: { WELCOME: 'welcome', ...criteria } },
+            welcome: { on: criteria },
+            ask_location: { on: criteria },
+            ask_price: { on: criteria },
+            ask_detail: { on: { DETAIL: 'ask_type', NO_DETAIL: search, END: 'end' } },
+            ask_type: {
+                on: {
+                    // @ts-ignore
+                    PROPERTY_TYPE: { target: 'ask_built_year', actions: (ctx, { propertyType }) => ctx.type = propertyType },
+                    END: 'end'
+                }
+            },
+            ask_built_year: {
+                on: {
+                    BUILT_YEAR: [
+                        {
+                            cond: (ctx, { builtYearMin, builtYearMax }) =>
+                                (ctx.opt = { builtYearMin, builtYearMax, ...ctx.opt }, false)
+                        },
+                        search
+                    ],
+                    BUILT_YEAR_ANY: search,
+                    END: 'end'
+                }
+            },
+            list: {
+                entry: ctx => ctx.respond(async twiml => {
+                    (ctx.properties instanceof Array ? ctx.properties : ctx.properties = await ctx.properties)
+                        .slice(ctx.page * page_size, (ctx.page + 1) * page_size)
+                        .forEach(({ thumbnail, }, i) =>
+                            twiml.message(ctx._desc(i + ctx.page * page_size)).media(thumbnail));
+                    twiml.message(ctx.msgs.list);
+                }),
+                on: view
+            },
+            info: {
+                entry: ctx => ctx.respond(async twiml => {
+                    const { facilities, map, photos } = ctx.property.detail || (await propertyDetail(ctx.property)).detail;
+                    twiml.message(`${ctx._desc(ctx.idx)}\n${'—'.repeat(22)}
+    *Features:*\n${facilities.map(f => `+ ${f}`).join('\n')}`).media(map);
+                    photos.forEach(photo => twiml.message('').media(photo));
+                }),
+                on: {
+                    EXCEL: {
+                        cond: (ctx, { id, base_url }) => (ctx.respond(async twiml => {
+                            const url = new URL(await createExcel(id, ctx.property), base_url).toString();
+                            // FIXME: Twilio currently does not support sending xlsx through WhatsApp
+                            twiml.message(url);
+                        }), false)
                     },
-                    search
-                ],
-                BUILT_YEAR_ANY: search,
-                END: 'end'
-            }
-        },
-        list: {
-            entry: ctx => ctx.respond(async twiml => {
-                (ctx.properties instanceof Array ? ctx.properties : ctx.properties = await ctx.properties)
-                    .slice(ctx.page * page_size, (ctx.page + 1) * page_size)
-                    .forEach(({ thumbnail, }, i) =>
-                        twiml.message(ctx._desc(i + ctx.page * page_size)).media(thumbnail));
-                twiml.message(ctx.msgs.list);
-            }),
-            on: view
-        },
-        info: {
-            entry: ctx => ctx.respond(async twiml => {
-                const { facilities, map, photos } = ctx.property.detail || (await propertyDetail(ctx.property)).detail;
-                twiml.message(`${ctx._desc(ctx.idx)}\n${'—'.repeat(22)}
-*Features:*\n${facilities.map(f => `+ ${f}`).join('\n')}`).media(map);
-                photos.forEach(photo => twiml.message('').media(photo));
-            }),
-            on: {
-                EXCEL: {
-                    cond: (ctx, { id, base_url }) => (ctx.respond(async twiml => {
-                        const url = new URL(await createExcel(id, ctx.property), base_url).toString();
-                        // FIXME: Twilio currently does not support sending xlsx through WhatsApp
-                        twiml.message(url);
-                    }), false)
-                },
-                PDF: {
-                    cond: (ctx, { id, base_url }) => (ctx.respond(async twiml =>
-                        twiml.message('').media(new URL(await createPDF(id, ctx.property), base_url).toString())
-                    ), false)
-                },
-                ...view
-            }
-        },
-        end: {}
-    }
-});
+                    PDF: {
+                        cond: (ctx, { id, base_url }) => (ctx.respond(async twiml =>
+                            twiml.message('').media(new URL(await createPDF(id, ctx.property), base_url).toString())
+                        ), false)
+                    },
+                    ...view
+                }
+            },
+            end: {}
+        }
+    });
+};

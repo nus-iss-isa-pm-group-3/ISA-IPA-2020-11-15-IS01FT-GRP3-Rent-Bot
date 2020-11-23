@@ -58,7 +58,7 @@ exports.propertyList = async (location, opt, type = 'residential') => {
     /** @type {Property[]} */
     const properties = [];
     const url = new URL(`${type}/${location}`, base_url);
-    Object.entries({ orderCriteria: 'datePostedDesc', ...opt }).forEach(([k, v]) => url.searchParams.set(k, `${v}`));
+    Object.entries({ ...opt, orderCriteria: 'datePostedDesc' }).forEach(([k, v]) => url.searchParams.set(k, `${v}`));
     const earliest_date = new Date(new Date().toDateString());
     earliest_date.setDate(earliest_date.getDate() - 14);
     page:

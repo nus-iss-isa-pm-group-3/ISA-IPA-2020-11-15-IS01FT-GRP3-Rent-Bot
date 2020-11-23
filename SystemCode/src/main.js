@@ -1,11 +1,10 @@
 const http = require('http');
+const os = require('os');
 const path = require('path');
-const fs = require('fs');
+const fs = require('fs/promises');
 const { Session } = require('./session.js');
-const { root } = require('./excel.js');
 
 const host = '127.0.0.1';
-const port = 5000;
 /** @type {Map<string, Session>} */
 const sessions = new Map;
 const content_types = {
@@ -21,7 +20,10 @@ const re_file = new RegExp(String.raw`^/(?<ext>${pt_ct})/(?<id>${pt_uuid})/(?<na
  */
 const error = res => (console.error('request not supported'), res.writeHead(404, 'Resource not found').end());
 
-(async () => {
+/**
+ * @param {() => void} callback
+ */
+const main = async (port = 5000, callback = undefined) => {
     http.createServer(async (req, res) => {
         const buf = [];
         console.debug(`\nMethod: ${req.method}\nURL: ${req.url}\nHeaders:
@@ -44,13 +46,20 @@ ${Object.entries(req.headers).map(([k, v]) => `  ${k}: ${v}`).join('\n')}\n`);
             }
         } else if (re_file.test(req.url) && !req.url.includes('..') && 'GET' == req.method) {
             const { ext, id, name } = req.url.match(re_file).groups;
-            fs.createReadStream(path.join(root, id, decodeURIComponent(name))).pipe(res.writeHead(200, {
+            res.writeHead(200, {
                 'content-type': content_types[ext],
                 'content-disposition': `attachment; filename="${name}"`
-            }));
-            res.end();
+            }).end(await fs.readFile(path.join(
+                os.tmpdir(), 'virtual-renting-assistant', id, decodeURIComponent(name)
+            )));
         } else {
             error(res);
         }
-    }).listen({ host, port }, () => console.log(`Server is running on http://${host}:${port}`));
-})();
+    }).listen({ host, port }, callback || (() => console.log(`Server is running on http://${host}:${port}`)));
+};
+
+exports.main = main;
+
+if (require.main === module) {
+    main(+process.argv[2] || undefined);
+}

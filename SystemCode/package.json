@@ -1,10 +1,11 @@
 {
-  "name": "rent-bot",
+  "name": "virtual-renting-assistant",
   "version": "1.0.0",
   "description": "",
   "main": "src/main.js",
   "scripts": {
     "start": "node src/main.js",
+    "dev": "node script/dev.js",
     "test:scraper": "node script/test-scraper.js",
     "test:conversation": "node script/test-conversation.js",
     "test:excel": "node script/test-excel.js",
@@ -24,6 +25,7 @@
     "twilio": "^3.52.0"
   },
   "devDependencies": {
+    "ngrok": "^3.3.0",
     "xmldom": "^0.4.0",
     "xpath": "0.0.32"
   }
