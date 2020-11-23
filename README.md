@@ -16,9 +16,9 @@ Finding a suitable residence is one of the basic necessities that everyone needs
 
 | Official Full Name  | Student ID (MTech Applicable)  | Work Items (Who Did What) | Email (Optional) |
 | :------------ |:---------------:| :-----| :-----|
-| CAO Zi Hao | A0215407M | <ol type="a"><li>System design</li><li>Conversation workflow design</li><li>Dialogflow design and implementation</li><li>Demo video and Project report</li></ol> | e0535497@u.nus.edu |
+| CAO Zi Hao | A0215407M | <li>System design</li><li>Conversation workflow design</li><li>Dialogflow design and implementation</li><li>Demo video and Project report</li> | e0535497@u.nus.edu |
 | WANG Si Xiang | A0215475A | <li>Set up web server</li><li>Twilio interaction</li><li>PDF generation</li><li>Testing</li> | e0535565@u.nus.edu |
-| ZHANG Jiu Yun | A0215513R | <ol type="a"><li>Market research and System design</li><li>Clustering analysis</li><li>Conversation platform development</li><li>Project Report</li></ol> | e0535603@u.nus.edu |
+| ZHANG Jiu Yun | A0215513R | <li>Market research and System design</li><li>Clustering analysis</li><li>Conversation platform development</li><li>Project Report</li> | e0535603@u.nus.edu |
 | ZUO Zong Yuan | A0215291L | <li>Web scraper</li><li>Finite State Machine</li><li>Dialogflow interaction</li><li>Project report</li> | e0535381@u.nus.edu |
 
 ---
