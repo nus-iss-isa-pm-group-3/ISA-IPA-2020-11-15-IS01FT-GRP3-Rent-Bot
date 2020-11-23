@@ -74,6 +74,7 @@ Please make sure you are using Node.js 12.0.0 or higher (see `Node.js` column in
    5. Click Create. A JSON file that contains your key downloads to your computer.
    6. Provide authentication credentials to your application code by setting the environment variable GOOGLE_APPLICATION_CREDENTIALS.
       > For linux users：export GOOGLE_APPLICATION_CREDENTIALS="[PATH]"
+      
       > For Windows users: $env:GOOGLE_APPLICATION_CREDENTIALS="[PATH]"
 ---
 
