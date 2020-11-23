@@ -25,6 +25,8 @@ Finding a suitable residence is one of the basic necessities that everyone needs
 
 ## SECTION 4 : VIDEO OF SYSTEM MODELLING & USE CASE DEMO
 
+[![Virtual Renting Assistant](Miscellaneous/video-thumbnail.png)](https://nus-iss-isa-pm-group-3.github.io/ISA-IPA-2020-11-15-IS01FT-GRP3-Rent-Bot/Video/VirtualRentingAssistant.mp4)
+
 ---
 
 ## SECTION 5 : USER GUIDE
