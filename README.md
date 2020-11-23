@@ -73,8 +73,8 @@ Please make sure you are using Node.js 12.0.0 or higher (see `Node.js` column in
    4. From the Role list, select Project > Owner. Note that the Role field affects which resources your service account can access in your project. You can revoke these roles or grant additional roles later. In production environments, do not grant the Owner, Editor, or Viewer roles. 
    5. Click Create. A JSON file that contains your key downloads to your computer.
    6. Provide authentication credentials to your application code by setting the environment variable GOOGLE_APPLICATION_CREDENTIALS.
-      For linux users：export GOOGLE_APPLICATION_CREDENTIALS="[PATH]"
-      For Windows users: $env:GOOGLE_APPLICATION_CREDENTIALS="[PATH]"
+      > For linux users：export GOOGLE_APPLICATION_CREDENTIALS="[PATH]"
+      > For Windows users: $env:GOOGLE_APPLICATION_CREDENTIALS="[PATH]"
 ---
 
 ## SECTION 6 : PROJECT REPORT / PAPER
